@@ -1,14 +1,19 @@
-import { EventType, ParkingLot, Subscriber } from "./parking_lot.ts";
+import {
+  EventObject,
+  EventType,
+  ParkingLot,
+  Subscriber,
+} from "./parking_lot.ts";
 
 export class Display implements Subscriber {
-  update(eventType: EventType, lot: ParkingLot): void {
-    if (eventType === EventType.Enter) {
+  update(event: EventObject): void {
+    if (event.eventType === EventType.Enter) {
       console.log(
-        `a car entered the lot ${lot.name} occupied: ${lot.occupied}/${lot.capacity}`,
+        `a car entered the lot ${event.lotname} occupied: ${event.lotOccupied}/${event.lotCapacity}`,
       );
-    } else if (eventType === EventType.Exit) {
+    } else if (event.eventType === EventType.Exit) {
       console.log(
-        `a car left the lot ${lot.name} occupied: ${lot.occupied}/${lot.capacity}`,
+        `a car left the lot ${event.lotname} occupied: ${event.lotOccupied}/${event.lotCapacity}`,
       );
     }
   }

@@ -9,7 +9,12 @@ export class ParkingLot implements Publisher {
 
   notify(eventType: EventType): void {
     this.subscribers.forEach((subscriber) =>
-      subscriber.update(eventType, this)
+      subscriber.update({
+        eventType,
+        lotname: this.name,
+        lotOccupied: this.occupied,
+        lotCapacity: this.capacity,
+      })
     );
   }
   subscribe(subscriber: Subscriber): void {
@@ -53,10 +58,17 @@ export interface Publisher {
 }
 
 export interface Subscriber {
-  update(eventType: EventType, lot: ParkingLot): void;
+  update(event: EventObject): void;
 }
 
 export enum EventType {
   Enter = "enter",
   Exit = "exit",
+}
+
+export interface EventObject {
+  eventType: EventType;
+  lotname: string;
+  lotOccupied: number;
+  lotCapacity: number;
 }
